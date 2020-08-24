@@ -1,0 +1,13 @@
+{
+  "name": "@maltarepo/manager",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "webpack-dev-server --mode development",
+    "dev:manager": "yarn start"
+  },
+  "dependencies": {
+    "@maltarepo/axios-config": "*"
+  }
+}
