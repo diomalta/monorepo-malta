@@ -10,12 +10,16 @@
     "generate": "npm -s run generate:prisma && npm -s run generate:nexus",
     "generate:prisma": "prisma generate",
     "generate:nexus": "ts-node --transpile-only src/schema",
-    "dev": "ts-node-dev --no-notify --respawn --transpileOnly src/server"
+    "dev:server": "ts-node-dev --no-notify --respawn --transpileOnly src/server",
+    "postgres:start": "docker run -d -p 5432:5432 --name postmalta -e POSTGRES_HOST_AUTH_METHOD=trust postgres:12-alpine",
+    "database:create": "docker exec postmalta psql -U postgres postgres -c \"CREATE DATABASE $(grep DB_DATABASE .env | cut -d= -f 2)\"",
+    "migration:generate": "npx prisma migrate save --name init --experimental",
+    "migration:run": "npx prisma migrate up --experimental"
   },
   "dependencies": {
     "@nexus/schema": "0.15.0",
     "@prisma/client": "2.5.1",
-    "graphql": "15.3.0",
+    "graphql": "^14.0.0",
     "graphql-yoga": "1.18.3",
     "nexus-prisma": "0.13.0"
   },
@@ -26,6 +30,12 @@
     "ts-node": "8.10.2",
     "ts-node-dev": "1.0.0-pre.50",
     "typescript": "3.9.6"
+  },
+  "resolutions": {
+    "graphql": "^14.0.0"
+  },
+  "peerDependencies": {
+    "graphql": "^14.0.0"
   },
   "prettier": {
     "singleQuote": true,

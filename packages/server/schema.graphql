@@ -2,19 +2,91 @@
 ### Do not make changes to this file directly
 
 
-type Client
+type Client {
+  birthday: DateTime
+  email: String!
+  id: Int!
+  name: String!
+  user: User
+}
+
+input ClientCreateInput {
+  birthday: DateTime
+  email: String!
+  name: String!
+  user: UserCreateOneWithoutClientsInput
+}
+
+input ClientCreateManyWithoutUserInput {
+  connect: [ClientWhereUniqueInput!]
+  create: [ClientCreateWithoutUserInput!]
+}
+
+input ClientCreateWithoutUserInput {
+  birthday: DateTime
+  email: String!
+  name: String!
+}
+
+input ClientWhereUniqueInput {
+  id: Int
+}
+
+scalar DateTime
 
 type Mutation {
-  createPhone(contact: String!, isWhatsapp: Boolean!, type: typeContact): Phone!
+  createClient(data: ClientCreateInput!): Client!
+  createUser(data: UserCreateInput!): User!
+  deleteOneClient(where: ClientWhereUniqueInput!): Client
+  deleteOneUser(where: UserWhereUniqueInput!): User
 }
-
-type Phone
 
 type Query {
-  whatsapp: [Phone!]!
+  email(email: String): [User!]!
 }
 
-enum typeContact {
-  cellphone
-  phone
+enum Role {
+  ADMIN
+  USER
+}
+
+type User {
+  clients: [Client!]!
+  email: String!
+  id: String!
+  name: String!
+  password: String!
+  role: Role!
+  username: String
+}
+
+input UserCreateInput {
+  clients: ClientCreateManyWithoutUserInput
+  email: String!
+  id: String
+  name: String!
+  password: String!
+  role: Role
+  token: String
+  username: String
+}
+
+input UserCreateOneWithoutClientsInput {
+  connect: UserWhereUniqueInput
+  create: UserCreateWithoutClientsInput
+}
+
+input UserCreateWithoutClientsInput {
+  email: String!
+  id: String
+  name: String!
+  password: String!
+  role: Role
+  token: String
+  username: String
+}
+
+input UserWhereUniqueInput {
+  email: String
+  id: String
 }

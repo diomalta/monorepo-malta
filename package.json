@@ -29,6 +29,7 @@
     "unit": "jest",
     "dev:all": "lerna run start",
     "dev:manager": "lerna run dev:manager",
+    "dev:server": "lerna run dev:server",
     "dev:storybook": "start-storybook -p 5555"
   },
   "husky": {
